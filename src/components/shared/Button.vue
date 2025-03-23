@@ -1,0 +1,38 @@
+<script setup>
+import { defineEmits, computed } from 'vue'
+
+const props = defineProps({
+  //   color: { type: String, default: 'primary' },
+  //   variant: { type: String, default: 'flat' },
+  //   size: { type: String, default: 'default' },
+  customClass: { type: String, default: '' },
+  loading: { type: Boolean, default: false },
+})
+
+// Combine default classes with user-defined classes
+const buttonClasses = computed(() => `${props.customClass}`)
+
+const emit = defineEmits(['click'])
+</script>
+
+<template>
+  <v-btn
+    @click="emit('click')"
+    height="44"
+    width="100%"
+    rounded="lg"
+    :class="buttonClasses"
+    :loading="loading"
+  >
+    <slot></slot>
+  </v-btn>
+</template>
+
+<!-- <style scoped>
+.default-btn {
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 8px;
+  padding: 10px 20px;
+}
+</style> -->
