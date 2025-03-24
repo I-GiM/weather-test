@@ -1,19 +1,16 @@
 <script setup>
 import { useQuery } from '@tanstack/vue-query'
-import { supabase } from '../../../utils/supabase'
-import Dropdown from '../shared/Dropdown.vue'
-import Button from '../shared/Button.vue'
+import dayjs from 'dayjs'
+import { ref } from 'vue'
 import serverInstance from '../../../utils/api/instance'
 import { buildUrl } from '../../../utils/helpers'
-import { ref, watch, watchEffect } from 'vue'
-import dayjs from 'dayjs'
-import ExtraWeatherData from './ExtraWeatherData.vue'
-import IconHumidity from '../icons/IconHumidity.vue'
-import IconWind from '../icons/IconWind.vue'
-import IconRain from '../icons/IconRain.vue'
 import IconAtmPressure from '../icons/IconAtmPressure.vue'
 import IconDay from '../icons/IconDay.vue'
+import IconHumidity from '../icons/IconHumidity.vue'
 import IconNight from '../icons/IconNight.vue'
+import IconRain from '../icons/IconRain.vue'
+import IconWind from '../icons/IconWind.vue'
+import ExtraWeatherData from './ExtraWeatherData.vue'
 
 const weatherDetails = ref({
   id: 1,

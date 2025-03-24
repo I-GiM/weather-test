@@ -47,6 +47,7 @@ async function signOut() {
 
 <style scoped>
 .header {
+  background: #212121;
   height: 4rem;
   display: flex;
   align-items: center;
