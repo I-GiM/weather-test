@@ -14,6 +14,10 @@ const formDetails = ref({
   email: '',
   password: '',
 })
+const snackbar = ref({
+  show: false,
+  text: '',
+})
 
 const formRules = {
   valid: true,
@@ -42,10 +46,12 @@ const { mutate: loginMutate, isPending: loginPending } = useMutation({
   mutationKey: ['login'],
   mutationFn: async () => {
     try {
-      const { data } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: formDetails.value.email,
         password: formDetails.value.password,
       })
+
+      if (error) throw error
 
       return data
     } catch (error) {
@@ -56,6 +62,9 @@ const { mutate: loginMutate, isPending: loginPending } = useMutation({
     Cookies.set('access_token', data.session.access_token)
     router.replace('/weather')
   },
+  onError: (error) => {
+    snackbar.value = { show: true, text: error.message }
+  },
 })
 
 function signInWithEmail() {
@@ -65,6 +74,10 @@ function signInWithEmail() {
 
 <template>
   <section class="section">
+    <v-snackbar v-model="snackbar.show" :timeout="3000" color="white">
+      {{ snackbar.text }}
+    </v-snackbar>
+
     <v-form v-on:submit.prevent="signInWithEmail" v-model="formRules.valid" class="form">
       <h1 class="form-heading">Login</h1>
 
@@ -104,7 +117,9 @@ function signInWithEmail() {
         </v-label>
       </v-container>
 
-      <Button type="submit" custom-class="form-btn" :loading="loginPending">Login</Button>
+      <Button type="submit" custom-class="form-btn" :loading="loginPending" :disabled="loginPending"
+        >Login</Button
+      >
 
       <span class="redirect-text">
         Don't have an account?

@@ -11,7 +11,6 @@ const { isLoading: weatherLoading, data: weatherData } = useQuery({
   queryFn: async () => {
     const currentDay = dayjs().day()
 
-    console.log(currentDay, dayjs().day(0).format('dddd, D MMM, YYYY'))
     try {
       const res = await serverInstance.get(
         buildUrl('/v1/forecast', [
@@ -46,7 +45,7 @@ const { isLoading: weatherLoading, data: weatherData } = useQuery({
         <h1 class="heading-bottom">precisely for you</h1>
 
         <RouterLink to="/weather" class="mt-10 d-inline-block bg-white rounded-lg px-6 py-2"
-          >Explore</RouterLink
+          >Explore weather</RouterLink
         >
 
         <div class="week-weather">
@@ -102,7 +101,7 @@ const { isLoading: weatherLoading, data: weatherData } = useQuery({
 
 <style scoped>
 .main {
-  background-image: url('../assets/skyscrapers-high-buildings-new-york-downtown-usa.jpg');
+  background-image: url('../assets/skyscrapers-high-buildings-new-york-downtown-usa.webp');
   background-position: top center;
   min-height: 100dvh;
 }

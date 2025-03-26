@@ -25,6 +25,12 @@ async function signOut() {
     <nav class="container nav">
       <RouterLink to="/" class="home-link" exact> Ultimate Weather </RouterLink>
 
+      <RouterLink
+        v-if="route.path === '/'"
+        to="/login"
+        class="d-inline-block bg-white rounded-lg px-6 py-2"
+        >Explore</RouterLink
+      >
       <Dropdown v-if="route.path === '/weather'" :items="[]" :last-item="true">
         <template #button>
           <v-img
