@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { supabase } from '../../../utils/supabase'
 import Button from '../shared/Button.vue'
+import { useMutation } from '@tanstack/vue-query'
 
 const formDetails = ref({
   firstname: '',
