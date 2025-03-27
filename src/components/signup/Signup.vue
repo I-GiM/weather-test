@@ -3,12 +3,19 @@ import { ref } from 'vue'
 import { supabase } from '../../../utils/supabase'
 import Button from '../shared/Button.vue'
 import { useMutation } from '@tanstack/vue-query'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const formDetails = ref({
   firstname: '',
   lastname: '',
   email: '',
   password: '',
+})
+const snackbar = ref({
+  show: false,
+  text: '',
 })
 
 const formRules = {
@@ -45,7 +52,7 @@ const { mutate: signupMutate, isPending: signupPending } = useMutation({
   mutationKey: ['login'],
   mutationFn: async () => {
     try {
-      const { data } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: formDetails.value.email,
         password: formDetails.value.password,
 
@@ -58,13 +65,19 @@ const { mutate: signupMutate, isPending: signupPending } = useMutation({
         },
       })
 
+      if (error) throw error
+
       return data
     } catch (error) {
       throw error
     }
   },
   onSuccess: () => {
+    snackbar.value = { show: true, text: error.message }
     router.replace('/login')
+  },
+  onError: (error) => {
+    snackbar.value = { show: true, text: error.message }
   },
 })
 
@@ -154,6 +167,9 @@ function signUpNewUser() {
       </span>
     </v-form>
   </section>
+  <v-snackbar v-model="snackbar.show" :timeout="3000" color="white">
+    {{ snackbar.text }}
+  </v-snackbar>
 </template>
 
 <style lang="css" scoped>
