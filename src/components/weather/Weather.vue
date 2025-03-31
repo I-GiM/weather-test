@@ -81,6 +81,12 @@ const cityList = [
     lat: '9.1806',
     long: '7.1794',
   },
+  {
+    id: 11,
+    city: 'Kano',
+    lat: '12.0000',
+    long: '8.5167',
+  },
 ]
 
 // const { isPending, isFetching, isError, data, error } = useQuery({
